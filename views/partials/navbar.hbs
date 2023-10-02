@@ -1,0 +1,58 @@
+<div class="sidebar">
+    <!-- Logo or profile picture -->
+    <img src="static/images/nitin.jpeg" alt="Profile Picture" class="mx-auto d-block rounded-circle my-3"
+        style="border-radious:20%;width=20px;height:100px">
+    <!-- Sidebar links -->
+    <div></div>
+    <button type="button" class="btn btn-secondary btn-lg " style="margin-left: 18px;" data-bs-toggle="modal"
+        data-bs-target="#exampleModal">
+        Compose
+    </button>
+    <a href="#">Inbox</a>
+    <a href="#">Chats</a>
+    <a href="#">Sent</a>
+    <a href="#">Drafts</a>
+    <hr>
+    <a href="#">Meet</a>
+    <a href="#">Scheduled</a>
+    <a href="#">All Mail</a>
+    <a href="#">Spam</a>
+    
+    
+    
+</div>
+<div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New Message</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="compose" onsubmit="composeMail(event); return false;">
+                    <div class="input-group input-group-sm mb-3">
+                        <input type="text" class="form-control" name="to" placeholder="To"
+                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Subject" name="subject"
+                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Leave a comment here" name="mailContent"
+                            id="floatingTextarea2" style="height: 330px"></textarea>
+                        <label for="floatingTextarea2">Comments</label>`
+                    </div>
+
+                    <!-- Add a submit button to submit the form -->
+                    <button type="submit" class="btn btn-secondary" style="margin-left: 389px;margin-top: 10px">Submit</button>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="/static/js/Compose.js"></script>
