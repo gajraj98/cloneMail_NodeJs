@@ -1,0 +1,16 @@
+.center-div{
+    padding-top: 10%;
+}
+
+.btn.btn-success{
+    
+    margin-top: 5px;
+}
+form{
+    padding: 0 3em;
+}
+body{
+    background-image: url('/static/images/bg.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}

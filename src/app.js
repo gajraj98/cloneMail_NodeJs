@@ -3,7 +3,10 @@ import bodyparser from 'body-parser';
 import hbs from 'hbs';
 import routes from './Controller/main.js';
 import mongodb from 'mongodb';
-import dao from './Dao/inboxDao.js';
+import DbClient from './CommanFiles/DbClient.js';
+import session from 'express-session';
+import {v4 as uuidv4} from 'uuid';
+
 const app = express()
 
 const mongodbClient = mongodb.MongoClient;
@@ -14,6 +17,13 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({
     extended:true
 }))
+
+app.use(session({
+    secret:uuidv4(),
+    resave:false,
+    saveUninitialized:true
+}));
+
 app.use('/static',express.static("public"));
 app.set('view engine','hbs')
 app.set('views','views');
@@ -26,7 +36,7 @@ mongodbClient.connect(url,{
     useNewUrlParser:true,
 }).catch(e=>console.log("error in app.js"+e.message))
 .then(async client=>{
-    dao.injectDb(client);
+    DbClient.injectDb(client);
     console.log('Db connected');
 })
 

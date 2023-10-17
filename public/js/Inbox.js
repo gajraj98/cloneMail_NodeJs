@@ -27,20 +27,25 @@ function returnInbox() {
                 const td1 = document.createElement('td');
                 const td2 = document.createElement('td');
                 const td3 = document.createElement('td');
+                const td4 = document.createElement('td');
                 tr.style.height = '50px';
                 td1.style.width = '30%';
-                td2.style.width = '62%';
-                td3.style.width = '20%';
+                td2.style.width = '48%';
+                td3.style.width = '15%';
+                td4.style.width = '15%';
 
                 td1.textContent = gmail;
                 td2.textContent = subject;
                 const currentTime = new Date();
-                const formattedTime = currentTime.toLocaleTimeString();
-                td3.textContent = formattedTime;
+                const time = element.time;
+                const date  = element.date;
+                td3.textContent = date;
+                td4.textContent = time;
 
                 tr.appendChild(td1);
                 tr.appendChild(td2);
                 tr.appendChild(td3);
+                tr.appendChild(td4);
                 tbody.appendChild(tr);
                 table.appendChild(tbody);
                 div.appendChild(table);

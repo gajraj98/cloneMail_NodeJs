@@ -3,9 +3,11 @@ import dao from '../Dao/inboxDao.js'
 export default class Dto{
     static async getInbox(req,res,next){
             try{
-                const mails = await dao.getInbox()
+                const gmail = req.session.user;
+                const mails = await dao.getInbox(gmail);
                 if(mails){
                     // console.log(mails);
+
                     res.send(mails);
                 }
                 else{
@@ -40,12 +42,15 @@ export default class Dto{
     }
     static async composeMail(req,res,next){
       console.log('composeMail stage1');
+      const currentTime = new Date();
       try{
-           const user = req.body.user;
+           const user = req.session.user;
            const to = req.body.to;
            const subject = req.body.subject;
            const mailContent  = req.body.mailContent;
-           const response = dao.composeMail(user,to,subject,mailContent);
+           const date = currentTime.toLocaleDateString();
+           const time = currentTime.toLocaleTimeString();
+           const response = dao.composeMail(user,to,subject,mailContent,date,time);
            if(!response){
             res.send("Server Error");
            }
@@ -57,5 +62,22 @@ export default class Dto{
         console.log(e.message);
         res.status(500).send('Error: ' + e.message);
       }
+    }
+    static async getAllSentMailDto(req,res,next){
+        try{
+            const gmail = req.session.user;
+            const mails = await dao.getAllSentMailDao(gmail);
+            if(mails){
+                // console.log(mails);
+
+                res.send(mails);
+            }
+            else{
+                res.send("Empty")
+            }
+        }
+        catch(e){
+            res.status(500).send(e.message)
+        } 
     }
 }

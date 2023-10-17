@@ -5,7 +5,6 @@ function composeMail(event) {
     console.log(url);
     const form = document.getElementById('compose');
     const formData = {
-        user:'Nitin@gmail.com',
         to: form.to.value,
         subject: form.subject.value,
         mailContent: form.mailContent.value
@@ -29,5 +28,5 @@ function composeMail(event) {
         .catch(error=>{
         console.log(error);
     });
-
+    $('#exampleModal').modal('hide');
 }
