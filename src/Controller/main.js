@@ -6,11 +6,24 @@ const routes = express.Router();
 routes.get('/',(req,res)=>{
     res.render('login');
 })
+routes.get('/sign',(req,res)=>{
+    res.render('signUp');
+})
+routes.get('/enterPhoneNumber',(req,res)=>{
+    res.render('input_phoneNumber');
+})
+routes.get('/otp-verifection',(req,res)=>{
+    const phoneNumber = req.query.phoneNumber;
+    res.render('enter_otp',{phoneNumber});
+})
+routes.get('/otp-verifection',login.otpVerifection);
+routes.post('/verifyPhoneNumber',login.verifyPhoneNumber);
 routes.get('/logout',login.logout);
 routes.post('/login',login.conformDetails);
 routes.get('/home',(req,res)=>{
     res.render('index');
 });
+routes.post('/sign',login.postDetails);
 routes.get('/inboxMailHtml/:id',(req,res)=>{
     const id = req.params.id;
     res.render('inboxMail',{id});
