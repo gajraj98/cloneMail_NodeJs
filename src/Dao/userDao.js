@@ -38,12 +38,12 @@ export default class User extends DbClient{
             return console.error(e.message);
         }
     }
-    static async verifyPhoneNumber(phoneNumber){
+    static async verifyPhoneNumber(email,phoneNumber){
         try{
             console.log('stage11');
             const session = DbClient.session.collection('user');
             console.log(phoneNumber);
-            const user = await session.findOne({ phoneNumber: phoneNumber.toString() });
+            const user = await session.findOne({ email: email });
             console.log('stage12');
             // console.log(user);
             return user;
@@ -53,31 +53,32 @@ export default class User extends DbClient{
             return e.message;
         }
     }
-    static async otpVerifection(phoneNumber){   
+    static async otpVerifection(email,phoneNumber){   
         try{
              const session = DbClient.session.collection('otp');
              const otp = await session
-             .find({ phoneNumber:  phoneNumber.toString() })
+             .find({ email: email })
              .sort({ timestamp: -1 })
              .limit(1)
              .toArray();
-             return otpRecord[0].otp;
+            //  console.log(otp[0].otp);
+             return otp[0].otp;
         }
         catch(e){
             return e.message;
         }
     }
-    static async saveOtp(phoneNumber,otp){
+    static async saveOtp(email,phoneNumber,otp){
         try{
-            console.log('stage30');
+
             const list = {
+                email:email,
                 phoneNumber:phoneNumber,
-               otp:otp
+                otp:otp
             };
-            console.log('stage31');
+           
             const session = DbClient.session.collection('otp');
             await session.insertOne(list);
-            console.log('stage34');
        }
        catch(e){
            console.log(e.message);

@@ -12,9 +12,16 @@ routes.get('/sign',(req,res)=>{
 routes.get('/enterPhoneNumber',(req,res)=>{
     res.render('input_phoneNumber');
 })
-routes.get('/otp-verifection',(req,res)=>{
+routes.get('/enter-otp',(req,res)=>{
     const phoneNumber = req.query.phoneNumber;
-    res.render('enter_otp',{phoneNumber});
+    const email = req.query.email;
+    // console.log(phoneNumber);
+    // console.log(email);
+    res.render('enter_otp',{phoneNumber,email});
+})
+routes.get('/password-change',(req,res)=>{
+    const phoneNumber = req.query.phoneNumber;
+    res.render('passwordChange',{phoneNumber});
 })
 routes.get('/otp-verifection',login.otpVerifection);
 routes.post('/verifyPhoneNumber',login.verifyPhoneNumber);

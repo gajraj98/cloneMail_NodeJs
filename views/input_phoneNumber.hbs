@@ -27,8 +27,19 @@
                         <div id="flag-container"></div>
                     </div>
                     <!-- Phone Number Input -->
-                    <input type="text" class="form-control" id="phoneNumber" placeholder="123-456-7890"
-                        aria-label="Phone number">
+                    <div class="row">
+                        <div class="col">
+                            <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control" id="phoneNumber" placeholder="123-456-7890"
+                                aria-label="Phone number">
+                        </div>
+                    </div>
+
+
                 </div>
                 <p>We will send you a one-time SMS message<br>Charges may apply</p>
                 <button type="button" class="btn btn-warning btn-lg" onclick="postNumber()">Enter OTP</button>

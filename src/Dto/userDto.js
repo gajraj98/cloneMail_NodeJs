@@ -2,7 +2,7 @@ import e from 'express';
 import dao from '../Dao/userDao.js'
 import twilio from 'twilio';
 const accountSid = "ACc502c1007c37406ca6783b1477c0740c";
-const token = "1187316fce9b4f928dadbc5a39c1e645";
+const token = "95ae5a29c3b875c4f7e14cf54aae4dde";
 const client = twilio(accountSid, token);
 
 
@@ -57,9 +57,13 @@ export default class User{
     }
     static async otpVerifection(req,res,next){
         try{
+            console.log('stage1');
             const phoneNumber = req.query.phoneNumber;
-            const otp = dao.otpVerifection(phoneNumber);
-            res.status(200).send(otp.tostring());
+            const email = req.query.email;
+            const otp =  await dao.otpVerifection(email,phoneNumber);
+            console.log('stage2');
+            res.status(200).send(otp.toString());
+           
         }
         catch(e){
             res.status(400).send(e.message);
@@ -68,14 +72,17 @@ export default class User{
     static async verifyPhoneNumber(req,res,next){
         try{
             const phoneNumber = req.body.number;
-            const user = await dao.verifyPhoneNumber(req.body.number);
+            const user = await dao.verifyPhoneNumber(req.body.email,req.body.number);
             console.log(user.phoneNumber);
             console.log(phoneNumber);
                 if(user.phoneNumber === phoneNumber){
                     console.log('stag2');
-                    await User.generateOtp(phoneNumber);
+                    await User.generateOtp(req.body.email,phoneNumber);
                     console.log('stag3');
                     res.status(200).send('enter otp');
+                }
+                else{
+                    console.log("number are not matches");
                 }
         }
         catch(e){
@@ -83,22 +90,20 @@ export default class User{
             res.status(400).send(e.message);
         }
     }
-    static async generateOtp(phoneNumber) {
+    static async generateOtp(email,phoneNumber) {
         try {
-            console.log('stag21')
             const min = 1000;
             const max = 9999;
             const otp = Math.floor(Math.random() * (max - min + 1)) + min;
 
             client.messages.create({
                 body: `Alert!! Your Bank account is in problem your otp is ${otp}`,
-                to: '+' + phoneNumber,
+                to: '+' + '91' + phoneNumber,
                 from: '+12565677671'
             })
                 .then(message => console.log(message.sid))
                 .catch(error => console.error(error.message));
-                console.log('stag22');
-            const response = await dao.saveOtp(phoneNumber, otp);
+            const response = await dao.saveOtp(email,phoneNumber, otp);
 
         }
         catch (e) {

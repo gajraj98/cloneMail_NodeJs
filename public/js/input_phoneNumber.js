@@ -19,7 +19,8 @@ $(document).ready(function () {
 function postNumber() {
     const url = baseUrl + 'verifyPhoneNumber';
     const input = document.querySelector("#phoneNumber");
-
+    const email = document.getElementById('email').value;
+      
     // Get the selected country code using the intl-tel-input plugin
     const selectedCountryData = window.intlTelInputGlobals.getInstance(input).getSelectedCountryData();
     const countryCode = selectedCountryData.dialCode;
@@ -27,6 +28,7 @@ function postNumber() {
     const formData = {
         code: countryCode,
         number: input.value,
+        email:email
     };
 
     console.log(formData);
@@ -45,13 +47,13 @@ function postNumber() {
                 throw new Error("Network response is not ok!");
             } else {
                 const phoneNumber =input.value;
-                window.location.href = `/otp-verifection?phoneNumber=${phoneNumber}`;
+                window.location.href = `/enter-otp?phoneNumber=${phoneNumber}&email=${email}`;
                 return res.text();
             }
         })
         .then(data =>{
             console.log('phonenumber.js');
-            window.location.href = `/otp-verifection?phoneNumber=${input.value}`;
+            window.location.href = `/enter-otp?phoneNumber=${input.value}&email=${email}`;
         })
         .catch(error =>{
             console.log('phonenumber.js1');
