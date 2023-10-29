@@ -15,7 +15,7 @@ function getOtp() {
             }
         })
         .then(data => {
-            data.reverse();
+           
             const otp = parseInt(data);
             const digit1 = document.getElementById('digit1').value;
             const digit2 = document.getElementById('digit2').value;

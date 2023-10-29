@@ -31,7 +31,7 @@ function postNumber() {
         email:email
     };
 
-    console.log(formData);
+   
 
     const options = {
         method: 'POST',

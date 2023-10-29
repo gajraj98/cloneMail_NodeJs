@@ -85,4 +85,21 @@ export default class User extends DbClient{
            return {Error:e.message};
        }
     }
+    static async updatePassword(email,phoneNumber,password){
+        try{
+            console.log(email);
+            console.log(password);
+              const session = DbClient.session.collection('user');
+              session.updateOne({email:email},
+                 {
+                    $set:{
+                        password:password
+                    }
+                 }
+                )
+        }
+        catch(e){
+         return e;
+        }
+    }
 }

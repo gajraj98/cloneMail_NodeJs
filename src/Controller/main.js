@@ -15,14 +15,14 @@ routes.get('/enterPhoneNumber',(req,res)=>{
 routes.get('/enter-otp',(req,res)=>{
     const phoneNumber = req.query.phoneNumber;
     const email = req.query.email;
-    // console.log(phoneNumber);
-    // console.log(email);
     res.render('enter_otp',{phoneNumber,email});
 })
 routes.get('/password-change',(req,res)=>{
     const phoneNumber = req.query.phoneNumber;
-    res.render('passwordChange',{phoneNumber});
+    const email = req.query.email;
+    res.render('passwordChange',{phoneNumber,email});
 })
+routes.post('/password-update',login.updatePassword);
 routes.get('/otp-verifection',login.otpVerifection);
 routes.post('/verifyPhoneNumber',login.verifyPhoneNumber);
 routes.get('/logout',login.logout);

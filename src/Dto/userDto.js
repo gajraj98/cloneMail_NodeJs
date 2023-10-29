@@ -110,5 +110,19 @@ export default class User{
             console.log(e.message)
         }
     }
+    static async updatePassword(req,res,next){
+          try{
+               const phoneNumber = req.body.phoneNumber;
+               const email = req.body.email;
+               const password = parseInt(req.body.password);
+               console.log(email);
+               dao.updatePassword(email,phoneNumber,password);
+               res.status(200).send("Password updated Successfully");
+          }
+          catch(e){
+                console.log(e.message);
+                res.status(400).send(e.message);
+          }
+    }
     
 }
