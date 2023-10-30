@@ -6,7 +6,7 @@ import mongodb from 'mongodb';
 import DbClient from './CommanFiles/DbClient.js';
 import session from 'express-session';
 import {v4 as uuidv4} from 'uuid';
-
+const PORT = process.env.PORT || 3000;
 const app = express()
 
 const mongodbClient = mongodb.MongoClient;
@@ -40,6 +40,6 @@ mongodbClient.connect(url,{
     console.log('Db connected');
 })
 
-app.listen(3000,()=>{
+app.listen(PORT,()=>{
     console.log('Application started')
 })
