@@ -14,17 +14,24 @@ export default class User{
             const email = req.body.email;
             const password = req.body.password;
             const user = await dao.conformDetails(email,password);
-            console.log(password);
-            console.log(user.password);
             if (req.body.email === user.email && parseInt(password.trim()) === user.password) {
                 req.session.user = user.email;
-                res.render('index');
+                const name = user.firstName + " " + user.lastName;
+                res.render('index',{name});
             } else {
                 res.send('Invalid User');
             }
         } catch (e) {
-            console.log('Error:', e.message);
             res.send(e.message);
+        }
+    }
+    static async getUser(email){
+        try{ 
+              const user = await dao.getUser(email);
+              return user;  
+        }
+        catch(e){
+           return "No user found";
         }
     }
     static async logout(req,res,next){
@@ -43,8 +50,9 @@ export default class User{
            const email = req.body.email;
            const password = req.body.password;
            const phoneNumber = req.body.phoneNumber;
-           console.log(email);
-           const response  = dao.addDetails(email,password,phoneNumber);
+           const firstName = req.body.firstName;
+           const lastName = req.body.lastName;
+           const response  = dao.addDetails(email,password,phoneNumber,firstName,lastName);
            if(response === "user already exist!!"){
             return res.status(409).json({ error: "User already exists." });
          }
@@ -73,12 +81,8 @@ export default class User{
         try{
             const phoneNumber = req.body.number;
             const user = await dao.verifyPhoneNumber(req.body.email,req.body.number);
-            console.log(user.phoneNumber);
-            console.log(phoneNumber);
                 if(user.phoneNumber === phoneNumber){
-                    console.log('stag2');
                     await User.generateOtp(req.body.email,phoneNumber);
-                    console.log('stag3');
                     res.status(200).send('enter otp');
                 }
                 else{
@@ -86,7 +90,6 @@ export default class User{
                 }
         }
         catch(e){
-            console.log(e.message);
             res.status(400).send(e.message);
         }
     }
@@ -115,7 +118,6 @@ export default class User{
                const phoneNumber = req.body.phoneNumber;
                const email = req.body.email;
                const password = parseInt(req.body.password);
-               console.log(email);
                dao.updatePassword(email,phoneNumber,password);
                res.status(200).send("Password updated Successfully");
           }

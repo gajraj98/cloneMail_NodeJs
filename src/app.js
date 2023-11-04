@@ -21,14 +21,19 @@ app.use(bodyparser.urlencoded({
 app.use(session({
     secret:uuidv4(),
     resave:false,
-    saveUninitialized:true
+    saveUninitialized:true,
+    cookie: {
+        maxAge: 3600000 // Session expires after 1 hour (in milliseconds)
+    }
 }));
 
 app.use('/static',express.static("public"));
+app.use('/inboxMailHtml/static',express.static("public"));
 app.set('view engine','hbs')
 app.set('views','views');
 app.use('/',routes);
 hbs.registerPartials("views/partials")
+
 
 mongodbClient.connect(url,{
     maxPoolSize:50,

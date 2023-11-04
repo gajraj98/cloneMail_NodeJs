@@ -9,6 +9,8 @@ function signUp(){
    const form  = document.getElementById('form');
    const email = form.elements.email.value;
    const conformEmail = form.elements.conformEmail.value;
+   const firstName = form.elements.firstName.value;
+   const lastName = form.elements.lastName.value;
    const password = form.elements.password.value;
    const conformPassword = form.elements.conformPassword.value;
    const phoneNumber=  form.elements.phoneNumber.value;
@@ -28,7 +30,9 @@ function signUp(){
           const formData = {
             email: email,
             password: password,
-            phoneNumber: phoneNumber
+            phoneNumber: phoneNumber,
+            firstName: firstName,
+            lastName: lastName
           }
         const options = {
             method:'POST',

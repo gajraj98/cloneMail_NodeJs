@@ -1,6 +1,16 @@
 import DbClient from "../CommanFiles/DbClient.js";
 
 export default class User extends DbClient{
+    static async getUser(email){
+        try{
+             const session = DbClient.session.collection('user');
+             const user = session.findOne({email:email});
+             return user;
+        }
+        catch(e){
+            return e.message;
+        }
+    }
     static async conformDetails(email,password){
         try{
            const session = DbClient.session.collection('user');
@@ -17,7 +27,7 @@ export default class User extends DbClient{
             return e.message;
         }
     }
-    static async addDetails(email,password,phoneNumber){
+    static async addDetails(email,password,phoneNumber,firstName,lastName){
         try{
             console.log(email);
                const session = DbClient.session.collection('user');
@@ -28,7 +38,9 @@ export default class User extends DbClient{
                const details = {
                 email: email,
                 password: password,
-                phoneNumber: phoneNumber
+                phoneNumber: phoneNumber,
+                firstName: firstName,
+                lastName: lastName
                }
 
                await session.insertOne(details);
