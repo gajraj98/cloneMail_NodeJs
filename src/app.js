@@ -6,6 +6,8 @@ import mongodb from 'mongodb';
 import DbClient from './CommanFiles/DbClient.js';
 import session from 'express-session';
 import {v4 as uuidv4} from 'uuid';
+import { WebSocketServer } from 'ws';
+// const webSocketServer = new ws.Server;
 const PORT = process.env.PORT || 3000;
 const app = express()
 
@@ -43,8 +45,76 @@ mongodbClient.connect(url,{
 .then(async client=>{
     DbClient.injectDb(client);
     console.log('Db connected');
-})
+})  
 
 app.listen(PORT,()=>{
     console.log('Application started')
 })
+
+// web socket server code
+
+let users = {};
+const wss = new  WebSocketServer({
+    port:8000
+});
+
+wss.on('connection',function(conn){
+    conn.on('message',function(message){
+       let data;
+       try{
+          data = JSON.parse(message);
+       }
+       catch(e){
+        console.log(e);
+       }
+
+       switch(data.type){
+         case 'online':
+            users[data.name] = conn;
+            conn.name = data.name;
+            sendTotherUsers(conn,{
+                type:'online',
+                success:true
+            })
+         break
+         case 'offer':
+            var connect = users[data.name];
+            console.log(conn.name);
+            if(connect!=null){
+              conn.otherUser = data.name;
+              sendTotherUsers(connect,{
+                type:"offer",
+                offer:data.offer,
+                name:conn.name
+              })
+            }
+        break;
+        case "answer":
+            var connect = users[data.name];
+            if(connect!=null){
+                conn.otherUser  = data.name;
+                sendTotherUsers(connect,{
+                    type:'answer',
+                    answer:data.answer
+                })
+            }
+        break;
+        case "candidate":
+            var connect = users[data.name];
+            if(connect!=null){
+                sendTotherUsers(connect,{
+                    type:'candidate',
+                    candidate:data.candidate
+                })
+            }
+            break;
+       }
+    });
+    conn.on('close',function(){
+       console.log('connection close');
+    });
+})
+
+function sendTotherUsers(connection,message){
+    connection.send(JSON.stringify(message));
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gmail-like Vertical Navbar</title>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+    integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/static/css/meet.js">
+    <style>
+        .main-wrap{
+            margin-left: 78px;
+            margin-top: 3%;
+            height: 200px;
+        }
+        #local-video{
+            height: 136px;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    </style>
+    
+    
+</head>
+
+<body>
+  {{>topNavbar Name = name}}
+   <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                {{> navbar}}
+            </div>
+            <div class="main-wrap">
+                <div class="call-wrap card" style="z-index: 99;">
+                    <video id="local-video" autoplay></video>
+                    <div class="row remote-video-wrap" style="position:relative;">
+                        <div class="call-hang-status" style="position:absolute; z-index:999;">
+
+                        </div>
+                        <video id="remote-video" autoplay></video>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="email" name="email" id="email" placeholder="Email">
+                            <button type="submit" id="call-btn" class="btn btn-success">Call</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+   <input type="hidden" value="{{email}}" id="currentUserEmail">
+
+    <!-- Include Bootstrap JS and jQuery -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"></script>
+       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="/static/js/meet.js"></script>
+</body>
+
+</html>

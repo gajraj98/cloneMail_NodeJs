@@ -30,6 +30,7 @@ routes.get('/profile', async (req, res)=>{
         const phoneNumber = user.phoneNumber;
         const name = user.firstName + " " + user.lastName;
         const email = user.email;
+        console.log(phoneNumber);
         res.render('user_profile', { name,email,phoneNumber });
     }
     else {
@@ -72,6 +73,17 @@ routes.get('/home', async (req, res) => {
         res.status(404).send('No User Found2');
     }
 });
+routes.get('/meet',async(req,res)=>{
+    if (req.session.cookie._expires !== null) {
+        const user = await login.getUser(req.session.user);
+        const name = user.firstName + " " + user.lastName;
+        const email = user.email;
+        res.render('meet', { name,email });
+    }
+    else {
+        res.status(404).send('No User Found2');
+    }
+})
 routes.post('/password-update', login.updatePassword);
 routes.get('/otp-verifection', login.otpVerifection);
 routes.post('/verifyPhoneNumber', login.verifyPhoneNumber);
